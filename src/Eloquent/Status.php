@@ -1,8 +1,8 @@
 <?php
 
-namespace HRServices\Core\Eloquent;
+namespace HRis\Core\Eloquent;
 
-use HRServices\Core\Traits\HasClass;
+use HRis\Core\Traits\HasClass;
 use Illuminate\Database\Eloquent\Model;
 
 class Status extends Model

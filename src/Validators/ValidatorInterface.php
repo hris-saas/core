@@ -1,6 +1,6 @@
 <?php
 
-namespace HRServices\Core\Validators;
+namespace HRis\Core\Validators;
 
 interface ValidatorInterface
 {

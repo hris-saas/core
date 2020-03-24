@@ -1,8 +1,8 @@
 <?php
 
-namespace HRServices\Core\Traits;
+namespace HRis\Core\Traits;
 
-use HRServices\Core\Scopes\ClassScope;
+use HRis\Core\Scopes\ClassScope;
 
 trait HasClass
 {

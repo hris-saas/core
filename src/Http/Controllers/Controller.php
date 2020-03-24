@@ -1,6 +1,6 @@
 <?php
 
-namespace HRServices\Core\Http\Controllers;
+namespace HRis\Core\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -12,7 +12,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    const ITEMS_PER_PAGE = 15;
+    protected const ITEMS_PER_PAGE = 15;
 
     protected $perPage = self::ITEMS_PER_PAGE;
 

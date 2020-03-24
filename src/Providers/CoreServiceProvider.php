@@ -1,6 +1,6 @@
 <?php
 
-namespace HRServices\Core\Providers;
+namespace HRis\Core\Providers;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
@@ -30,8 +30,8 @@ class CoreServiceProvider extends BaseServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/../../assets/lang', 'core');
 
         $this->publishes([
-            __DIR__.'/../../assets/lang' => resource_path('lang/vendor/hr-services/core'),
-        ], 'hr-services::core-translations');
+            __DIR__.'/../../assets/lang' => resource_path('lang/vendor/hris-saas/core'),
+        ], 'hris-saas::core-translations');
     }
 
     /**
@@ -45,7 +45,7 @@ class CoreServiceProvider extends BaseServiceProvider
 
         $this->publishes([
             __DIR__.'/../../assets/migrations' => database_path('migrations'),
-        ], 'hr-services::core-migrations');
+        ], 'hris-saas::core-migrations');
     }
 
     /**

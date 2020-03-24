@@ -1,6 +1,6 @@
 <?php
 
-namespace HRServices\Core\Providers;
+namespace HRis\Core\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -20,7 +20,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'HRServices\Core\Http\Controllers';
+    protected $namespace = 'HRis\Core\Http\Controllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.
