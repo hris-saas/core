@@ -4,6 +4,7 @@ namespace HRis\Core\Tests;
 
 use HRis\Core\Traits\UseCreateApplication;
 use Illuminate\Foundation\Testing\TestCase;
+use Illuminate\Routing\Middleware\ThrottleRequests;
 
 class Test extends TestCase
 {
@@ -25,6 +26,16 @@ class Test extends TestCase
     protected $faker;
 
     public $mockConsoleOutput = false;
+
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->withoutMiddleware(
+            ThrottleRequests::class
+        );
+    }
 
     public function log_me_in()
     {
