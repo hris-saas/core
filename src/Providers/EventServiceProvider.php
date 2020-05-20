@@ -2,7 +2,8 @@
 
 namespace HRis\Core\Providers;
 
-use Illuminate\Support\Facades\Event;
+use Tenancy\Affects\URLs\Events\ConfigureURL;
+use HRis\Core\Listeners\ConfigureApplicationUrl;
 use HRis\Core\Listeners\ConfigureTenantDatabase;
 use HRis\Core\Listeners\ResolveTenantConnection;
 use HRis\Core\Listeners\ConfigureTenantConnection;
@@ -41,6 +42,10 @@ class EventServiceProvider extends ServiceProvider
 
         ConfigureConfig::class => [
             ConfigureTenantIntegrations::class,
+        ],
+
+        ConfigureURL::class => [
+            ConfigureApplicationUrl::class,
         ],
     ];
 
