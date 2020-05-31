@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\Console\Input\InputInterface;
 use Tenancy\Identification\Contracts\Tenant as TenantContract;
 use Tenancy\Identification\Drivers\Http\Contracts\IdentifiesByHttp;
+use Tenancy\Identification\Drivers\Console\Contracts\IdentifiesByConsole;
 
-class Tenant extends Model implements TenantContract, IdentifiesByHttp
+class Tenant extends Model implements TenantContract, IdentifiesByHttp, IdentifiesByConsole
 {
     protected $fillable = ['uuid', 'fqdn'];
 
@@ -18,7 +19,32 @@ class Tenant extends Model implements TenantContract, IdentifiesByHttp
         'updated' => Events\Updated::class,
         'deleted' => Events\Deleted::class,
     ];
+
+    /**
+     * Specify whether the tenant model is matching the request.
+     *
+     * @param Request $request
+     *
+     * @return Tenant
+     */
+    public function tenantIdentificationByConsole(InputInterface $input): ?Tenant
+    {
+        if ($input->hasParameterOption('--tenant')) {
+            return $this->query()
+                ->where('id', $input->getParameterOption('--tenant'))
+                ->first();
+        }
+        
+        return null;
+    }
     
+    /**
+     * Specify whether the tenant model is matching the request.
+     *
+     * @param Request $request
+     *
+     * @return Tenant
+     */
     public function tenantIdentificationByHttp(Request $request): ?Tenant
     {
         return $this->query()
@@ -57,23 +83,5 @@ class Tenant extends Model implements TenantContract, IdentifiesByHttp
         $connection = $this->getConnectionName() ?? config('database.default');
 
         return "$connection.$identifier";
-    }
-
-    /*
-     * Specify whether the tenant model is matching the request.
-     *
-     * @param Request $request
-     *
-     * @return Tenant
-     */
-    public function tenantIdentificationByConsole(InputInterface $input): ?Tenant
-    {
-        if ($input->hasParameterOption('--tenant')) {
-            return $this->query()
-                ->where('id', $input->getParameterOption('--tenant'))
-                ->first();
-        }
-        
-        return null;
     }
 }
