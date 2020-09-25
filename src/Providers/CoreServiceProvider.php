@@ -41,10 +41,10 @@ class CoreServiceProvider extends BaseServiceProvider
      */
     protected function registerMigrations(): void
     {
-        $this->loadMigrationsFrom(__DIR__.'/../../assets/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../../assets/database/migrations');
 
         $this->publishes([
-            __DIR__.'/../../assets/migrations' => database_path('migrations'),
+            __DIR__.'/../../assets/database/migrations' => database_path('migrations'),
         ], 'hris-saas::core-migrations');
     }
 
