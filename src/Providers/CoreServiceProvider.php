@@ -2,6 +2,11 @@
 
 namespace HRis\Core\Providers;
 
+use HRis\Core\Console\Migrations\FreshCommand;
+use HRis\Core\Console\Migrations\ResetCommand;
+use HRis\Core\Console\Migrations\StatusCommand;
+use HRis\Core\Console\Migrations\MigrateCommand;
+use HRis\Core\Console\Migrations\RollbackCommand;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 class CoreServiceProvider extends BaseServiceProvider
@@ -55,6 +60,24 @@ class CoreServiceProvider extends BaseServiceProvider
      */
     public function register(): void
     {
-        // TODO: Implement register() method.
+        $this->app->singleton('command.migrate.fresh', function () {
+            return new FreshCommand();
+        });
+
+        $this->app->extend('command.migrate', function () {
+            return new MigrateCommand();
+        });
+
+        $this->app->extend('command.migrate.reset', function () {
+            return new ResetCommand();
+        });
+
+        $this->app->extend('command.migrate.rollback', function () {
+            return new RollbackCommand();
+        });
+
+        $this->app->extend('command.migrate.status', function () {
+            return new StatusCommand();
+        });
     }
 }

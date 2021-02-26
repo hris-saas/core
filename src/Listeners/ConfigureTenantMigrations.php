@@ -7,14 +7,14 @@ use Tenancy\Hooks\Migration\Events\ConfigureMigrations;
 
 class ConfigureTenantMigrations
 {
-    protected $order = [
-        'core', 'auth', 'pim', 'ats',
-    ];
+    protected array $order = [];
 
-    protected $finalPaths = [];
+    protected array $finalPaths = [];
 
     public function handle(ConfigureMigrations $event)
     {
+        $this->order = app('config')['hris-saas.database.migrations.order'];
+
         $paths = app('migrator')->paths();
 
         foreach ($paths as $path) {
