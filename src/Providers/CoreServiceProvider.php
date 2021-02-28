@@ -2,6 +2,7 @@
 
 namespace HRis\Core\Providers;
 
+use HRis\Core\Validators\Validator;
 use HRis\Core\Console\Migrations\FreshCommand;
 use HRis\Core\Console\Migrations\ResetCommand;
 use HRis\Core\Console\Migrations\StatusCommand;
@@ -21,6 +22,8 @@ class CoreServiceProvider extends BaseServiceProvider
         if ($this->app->runningInConsole()) {
             $this->registerMigrations();
         }
+
+        Validator::registerValidators();
 
         $this->registerTranslations();
     }

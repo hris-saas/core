@@ -2,6 +2,7 @@
 
 namespace HRis\Core\Providers;
 
+use HRis\Core\Observers\StatusObserver;
 use Tenancy\Affects\URLs\Events\ConfigureURL;
 use HRis\Core\Listeners\ConfigureApplicationUrl;
 use HRis\Core\Listeners\ConfigureTenantDatabase;
@@ -27,7 +28,7 @@ class EventServiceProvider extends ServiceProvider
         ConfigureMigrations::class => [
             ConfigureTenantMigrations::class,
         ],
-        
+
         ConfiguringConnection::class => [
             ConfigureTenantConnection::class,
         ],
@@ -56,6 +57,10 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        parent::boot();
+        $statuses = config('hris-saas.models.statuses', []);
+
+        foreach ($statuses as $model) {
+            (new $model)::observe(StatusObserver::class);
+        }
     }
 }
