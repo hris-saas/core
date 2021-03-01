@@ -4,13 +4,14 @@ namespace HRis\Core\Eloquent;
 
 use HRis\Core\Traits\HasClass;
 use HRis\Core\Traits\HasSortOrder;
+use HRis\Core\Traits\HasMovingForward;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Status extends Model
 {
-    use HasClass, HasSortOrder, HasTranslations, SoftDeletes;
+    use HasClass, HasMovingForward, HasSortOrder, HasTranslations, SoftDeletes;
 
     public $translatable = ['name'];
 
