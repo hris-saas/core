@@ -93,4 +93,19 @@ class StatusController extends Controller
 
         return response()->json(['status' => trans('core::app.delete_resource_successful')], Response::HTTP_OK);
     }
+
+    /**
+     * Restore the specified resource in storage.
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function restore(Request $request): JsonResponse
+    {
+        $record = (new $request->model_type)::withTrashed()->whereNotNull('deleted_at')->findOrFail($request->model_id);
+        $record->restore();
+
+        return response()->json(['status' => trans('core::app.restore_resource_successful')], Response::HTTP_OK);
+    }
 }

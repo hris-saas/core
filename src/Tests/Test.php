@@ -9,7 +9,7 @@ use Illuminate\Routing\Middleware\ThrottleRequests;
 class Test extends TestCase
 {
     use UseCreateApplication;
-    
+
     /**
      * Service providers to load during this test.
      *
@@ -21,7 +21,7 @@ class Test extends TestCase
 
     public $config = [];
 
-    protected $token;
+    public $token;
 
     protected $faker;
 

@@ -58,4 +58,22 @@ trait HasSortOrder
             (new $model)::where('sort_order', '>', $record->sort_order)->orderBy('sort_order')->decrement('sort_order');
         });
     }
+
+    /**
+     * Update the sort order of other records in the database when restoring a record.
+     *
+     * @param $record
+     */
+    public static function restoreSortOrder($record)
+    {
+        $model = get_class($record);
+
+        (new $model)::withoutEvents(function () use ($record, $model) {
+            $response = (new $model)::where('sort_order', '>=', $record->sort_order)->orderBy('sort_order')->increment('sort_order');
+
+            if (! $response) {
+                $record->update(['sort_order' => (new $model)::count() + 1]);
+            }
+        });
+    }
 }

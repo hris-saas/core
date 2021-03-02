@@ -7,7 +7,7 @@ use HRis\Core\Traits\HasSortOrder;
 class BaseObserver
 {
     /**
-     * Handle the EmployeeField "created" event.
+     * Handle the Model "created" event.
      *
      * @param  $record
      *
@@ -19,7 +19,7 @@ class BaseObserver
     }
 
     /**
-     * Handle the EmployeeField "updating" event.
+     * Handle the Model "updating" event.
      *
      * @param  $record
      *
@@ -33,7 +33,7 @@ class BaseObserver
     }
 
     /**
-     * Handle the EmployeeField "updated" event.
+     * Handle the Model "updated" event.
      *
      * @param  $record
      *
@@ -45,7 +45,7 @@ class BaseObserver
     }
 
     /**
-     * Handle the EmployeeField "deleting" event.
+     * Handle the Model "deleting" event.
      *
      * @param  $record
      *
@@ -59,7 +59,7 @@ class BaseObserver
     }
 
     /**
-     * Handle the EmployeeField "deleted" event.
+     * Handle the Model "deleted" event.
      *
      * @param  $record
      *
@@ -71,13 +71,39 @@ class BaseObserver
     }
 
     /**
-     * Handle the EmployeeField "forceDeleted" event.
+     * Handle the Model "forceDeleted" event.
      *
      * @param  $record
      *
      * @return void
      */
     public function forceDeleted($record)
+    {
+        //
+    }
+
+    /**
+     * Handle the Model "restoring" event.
+     *
+     * @param  $record
+     *
+     * @return void
+     */
+    public function restoring($record)
+    {
+        if (array_key_exists(HasSortOrder::class, $this->classUsesDeep($record))) {
+            HasSortOrder::restoreSortOrder($record);
+        }
+    }
+
+    /**
+     * Handle the Model "restored" event.
+     *
+     * @param  $record
+     *
+     * @return void
+     */
+    public function restored($record)
     {
         //
     }
