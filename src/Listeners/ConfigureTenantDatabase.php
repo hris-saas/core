@@ -15,6 +15,8 @@ class ConfigureTenantDatabase
      */
     public function handle(Configuring $event)
     {
-        $event->useConnection('mysql', $event->defaults($event->tenant));
+        $overrides = array_merge(['host' => '%'], $event->defaults($event->tenant));
+
+        $event->useConnection('mysql', $overrides);
     }
 }
