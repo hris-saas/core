@@ -3,7 +3,6 @@
 namespace HRis\Core\Http\Requests;
 
 use HRis\Core\Eloquent\Status;
-use HRis\Auth\Http\Requests\BaseRequest;
 
 class StatusRequest extends BaseRequest
 {
