@@ -13,7 +13,7 @@ class ConfigureTenantMigrations
 
     public function handle(ConfigureMigrations $event)
     {
-        $this->order = app('config')['hris-saas.database.migrations.order'];
+        $this->order = array_unique(app('config')['hris-saas.database.migrations.order']);
 
         $paths = app('migrator')->paths();
 

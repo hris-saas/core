@@ -16,7 +16,7 @@ trait MutatesMigrationCommand
 
     public function __construct()
     {
-        $this->order = app('config')['hris-saas.database.migrations.order'];
+        $this->order = array_unique(app('config')['hris-saas.database.migrations.order']);
 
         $this->migrator = app('migrator');
 

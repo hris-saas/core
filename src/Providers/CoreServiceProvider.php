@@ -8,7 +8,6 @@ use HRis\Core\Console\Migrations\ResetCommand;
 use HRis\Core\Console\Migrations\StatusCommand;
 use HRis\Core\Console\Migrations\MigrateCommand;
 use HRis\Core\Console\Migrations\RollbackCommand;
-use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 class CoreServiceProvider extends BaseServiceProvider
 {
@@ -24,6 +23,8 @@ class CoreServiceProvider extends BaseServiceProvider
         }
 
         Validator::registerValidators();
+
+        $this->registerConfigs();
 
         $this->registerTranslations();
     }
@@ -54,6 +55,18 @@ class CoreServiceProvider extends BaseServiceProvider
         $this->publishes([
             __DIR__.'/../../assets/database/migrations' => database_path('migrations'),
         ], 'hris-saas::core-migrations');
+    }
+
+    /**
+     * Register Core's config files.
+     *
+     * @return void
+     */
+    protected function registerConfigs(): void
+    {
+        $path = realpath(__DIR__.'/../../assets/config/config.php');
+
+        $this->mergeConfigFrom($path, 'hris-saas');
     }
 
     /**
