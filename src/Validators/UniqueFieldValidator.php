@@ -16,9 +16,6 @@ class UniqueFieldValidator implements ValidatorInterface
     public function extend(): void
     {
         Validator::extend('unique_field', function ($attribute, $value, $parameters, $validator) {
-            [$table, $column] = $parameters;
-
-            $ignoreId = isset($parameters[2]) ? $parameters[2] : null;
 
             $models = config('hris-saas.models');
 
@@ -28,11 +25,19 @@ class UniqueFieldValidator implements ValidatorInterface
 
             $model = (new $fields[$key]);
 
-            if (is_null($ignoreId)) {
-                return ! $model::where($column, $value)->first();
+            $locales = config('hris-saas.supported_locales');
+
+            $dbValue = $model::where(function ($query) use ($locales, $attribute, $value) {
+                    foreach($locales as $locale) {
+                        $query->orWhereJsonContains($attribute, [$locale => $value]);
+                    }
+                })->get();
+
+            if ($dbValue && count($dbValue) > 0) {
+                return false;
             }
 
-            return ! $model::where($column, $value)->where($model->getKeyName(), '!=', $ignoreId)->first();
+            return true;
         });
     }
 
