@@ -20,5 +20,5 @@ return [
     |
     */
 
-    'supported_locales' => ['nl', 'fr', 'en'],
+    'supported_locales' => ['nl', 'fr', 'en', 'es'],
 ];
