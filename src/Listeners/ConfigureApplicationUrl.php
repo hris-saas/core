@@ -9,7 +9,7 @@ class ConfigureApplicationUrl
     public function handle(ConfigureURL $event)
     {
         if ($tenant = $event->event->tenant) {
-            $event->changeRoot($tenant->fqdn);
+            $event->changeRoot('https://'.$tenant->fqdn);
         }
     }
 }
