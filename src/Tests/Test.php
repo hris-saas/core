@@ -2,6 +2,8 @@
 
 namespace HRis\Core\Tests;
 
+use HRis\Auth\Eloquent\User;
+use Illuminate\Support\Facades\Artisan;
 use HRis\Core\Traits\UseCreateApplication;
 use Illuminate\Foundation\Testing\TestCase;
 use Illuminate\Routing\Middleware\ThrottleRequests;
@@ -43,6 +45,8 @@ class Test extends TestCase
             return $this->token;
         }
 
+        $this->createUser();
+
         $data = [
             'email'    => 'tenant1@hris-saas.com',
             'password' => 'password',
@@ -68,5 +72,18 @@ class Test extends TestCase
         $headers = array_merge($headers, $authorizationHeader);
 
         return $this->json($method, $endpoint, $data, $headers);
+    }
+
+    public function createUser()
+    {
+        User::create([
+            'email' => 'tenant1@hris-saas.com',
+            'name'  => 'Tenant1 Admin',
+            'password' => bcrypt('password'),
+        ]);
+
+        Artisan::call('passport:install');
+        Artisan::call('db:seed', ['--class' => 'PermissionsTableSeeder']);
+        Artisan::call('db:seed', ['--class' => 'RolesTableSeeder']);
     }
 }

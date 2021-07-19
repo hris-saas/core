@@ -32,7 +32,7 @@ trait MutatesMigrationCommand
      */
     protected function getMigrationPaths()
     {
-        if (($this->input->hasOption('path') && $this->option('path')) || ! $this->option('tenant')) {
+        if (($this->input->hasOption('path') && $this->option('path')) || ($this->input->hasOption('tenant') && ! $this->option('tenant'))) {
             return parent::getMigrationPaths();
         }
 

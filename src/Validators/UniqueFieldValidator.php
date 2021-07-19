@@ -16,22 +16,29 @@ class UniqueFieldValidator implements ValidatorInterface
     public function extend(): void
     {
         Validator::extend('unique_field', function ($attribute, $value, $parameters, $validator) {
-
             $models = config('hris-saas.models');
 
             $fields = array_merge($models['employee-fields'], $models['statuses']);
 
             $key = request()->segment(2);
 
-            $model = (new $fields[$key]);
+            $model = (new $fields[$key]());
 
             $locales = config('hris-saas.supported_locales');
 
-            $dbValue = $model::where(function ($query) use ($locales, $attribute, $value) {
-                    foreach($locales as $locale) {
+            if (config('database.default') != 'sqlite') {
+                $dbValue = $model::where(function ($query) use ($locales, $attribute, $value) {
+                    foreach ($locales as $locale) {
                         $query->orWhereJsonContains($attribute, [$locale => $value]);
                     }
                 })->get();
+            } else {
+                $dbValue = $model::where(function ($query) use ($locales, $attribute, $value) {
+                    foreach ($locales as $locale) {
+                        $query->orWhere($attribute, 'LIKE', "%\"{$value}\"%");
+                    }
+                })->get();
+            }
 
             if ($dbValue && count($dbValue) > 0) {
                 return false;

@@ -13,7 +13,7 @@ trait UseCreateApplication
         if (getenv('CI_PROJECT_DIR')) {
             $appPaths[] = realpath(getenv('CI_PROJECT_DIR') . '/vendor/laravel/laravel');
         }
-        
+
         $app = false;
 
         foreach ($appPaths as $path) {
